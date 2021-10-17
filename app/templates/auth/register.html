@@ -12,13 +12,56 @@
 
 			</div>
 			<div class="col-md-8">
-				<div class="card">
+				<div class="card mt-5">
 					<img src="https://mta-instagram-clone.herokuapp.com/static/img/instagram-wordmark.svg" class="card-img-top" alt="...">
 					<div class="card-body">
 						<h5 class="card-title">Sign up to see photos and videos from your friends.</h5>
-						<a href="" class="btn btn-sm btn-block btn-primary">Login With Facebook</a>
+						<a href="" class="btn btn-sm btn-block btn-primary"> <i class="fab fa-facebook"></i> Login With Facebook</a>
+
+						<div class="row">
+							<div class="col-md-5">
+								<hr>
+							</div>
+							<div class="col-md-2">
+								<p class="text-muted"> OR </p>
+							</div>
+							<div class="col-md-5">
+								<hr>
+							</div>
+						</div>
+						<form action="{% url 'register' %}" method="post">
+							{% csrf_token %}
+
+							<div class="form-group">
+								<input type="email" class="form-control form-control-sm" name="email" value="{{data.email}}" placeholder="Email">
+
+								<input type="text" class="form-control form-control-sm mt-2" name="name" value="{{data.name}}" placeholder="FullName">
+
+								<input type="text" class="form-control form-control-sm mt-2" name="username" value="{{data.username}}" placeholder="username">
+
+								<input type="password" class="form-control form-control-sm mt-2" name="password" value="" placeholder="Password">
+
+								<input type="password" class="form-control form-control-sm mt-2" name="password2" value="" placeholder="Confirm Password">
+
+							</div>
+
+							<input type="submit" class="btn btn-sm btn-block btn-primary" value="Register">
+
+						</form>
+
+						<small class="py-3">
+							By signing up,you agree to our Terms, Data Policy & Cookies Policy !
+						</small>
+
 				  </div>
         </div>
+				<div class="card mt-4">
+					<div class="card-body">
+						<p>
+							Already Have An Account ?   <a href="">Login</a>
+						</p>
+					</div>
+				</div>
 			</div>
 			<div class="col-md-2"></div>
 		</div>
