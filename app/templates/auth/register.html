@@ -19,19 +19,6 @@
 					<img src="https://mta-instagram-clone.herokuapp.com/static/img/instagram-wordmark.svg" class="card-img-top" alt="...">
 					<div class="card-body">
 						<h5 class="card-title">Sign up to see photos and videos from your friends.</h5>
-						<a href="" class="btn btn-sm btn-block btn-primary"> <i class="fab fa-facebook"></i> Login With Facebook</a>
-
-						<div class="row">
-							<div class="col-md-5">
-								<hr>
-							</div>
-							<div class="col-md-2">
-								<p class="text-muted"> OR </p>
-							</div>
-							<div class="col-md-5">
-								<hr>
-							</div>
-						</div>
 
 						{% include 'partials/flash_messages.html' %}
 
@@ -55,6 +42,22 @@
 
 						</form>
 
+						<hr>
+
+						<div class="row">
+							<div class="col-md-5">
+								<hr>
+							</div>
+							<div class="col-md-2">
+								<p class="text-muted"> OR </p>
+							</div>
+							<div class="col-md-5">
+								<hr>
+							</div>
+						</div>
+
+						<a href="" class="btn btn-sm btn-block btn-primary"> <i class="fab fa-facebook"></i> Login With Facebook</a>
+
 						<small class="py-3">
 							By signing up,you agree to our Terms, Data Policy & Cookies Policy !
 						</small>
@@ -64,7 +67,7 @@
 				<div class="card mt-4">
 					<div class="card-body">
 						<p>
-							Already Have An Account ?   <a href="login">Login</a>
+							Already Have An Account ?   <a href="{% url 'login' %}">Login</a>
 						</p>
 					</div>
 				</div>
