@@ -72,7 +72,7 @@ class RegistrationView(View):
 			email_subject,
 			message,
 			settings.EMAIL_HOST_USER,
-			[email],
+			[email]
     )
 		email_message.send()
 
@@ -92,7 +92,7 @@ class ActivateAccountView(View):
 		except Exception as identifier:
 			user = None
 
-		if user is not None and PasswordResetTokenGenerator.check_token(user, token):
+		if user is not None and generate_token.check_token(user, token):
 			user.is_active = True
 			user.save()
 			messages.add_message(request, messages.INFO, 'Account Activated Successfully!')
