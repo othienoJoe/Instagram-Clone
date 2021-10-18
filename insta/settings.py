@@ -133,7 +133,7 @@ EMAIL_PORT = os.environ.get('EMAIL_PORT')
 
 # Message configuration
 MESSAGE_TAGS = {
-    messages.ERROR, 'danger'
+    messages.ERROR:'danger'
 }
 
 # Default primary key field type
