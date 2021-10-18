@@ -7,7 +7,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from .utils import generate_token
 from django.core.mail import EmailMessage
 from django.conf import settings
 
@@ -65,7 +65,7 @@ class RegistrationView(View):
 			'user': user,
 			'domain': current_site.domain,
 			'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-			'token': PasswordResetTokenGenerator.make_token(user)
+			'token': generate_token.make_token(user)
 		})
 
 		email_message = EmailMessage(
