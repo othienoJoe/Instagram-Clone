@@ -3,6 +3,13 @@ from django.views.generic import View
 from validate_email import validate_email
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.core.mail import EmailMessage
+from django.conf import settings
 
 # Create your views here.
 class RegistrationView(View):
@@ -50,6 +57,24 @@ class RegistrationView(View):
 		user.is_active = False
 
 		user.save()
+
+		current_site = get_current_site(request)
+		email_subject = 'Activate Your Account',
+		message = render_to_string('auth/activate.html',
+		{
+			'user': user,
+			'domain': current_site.domain,
+			'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+			'token': PasswordResetTokenGenerator.make_token(user)
+		})
+
+		email_message = EmailMessage(
+			email_subject,
+			message,
+			settings.EMAIL_HOST_USER,
+			[email],
+    )
+		email_message.send()
 
 		messages.add_message(request, messages.SUCCESS, 'Account Successfully Created !')
 
