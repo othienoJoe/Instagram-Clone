@@ -30,15 +30,7 @@
 							</div>
 						</div>
 
-						{% if messages %}
-
-						{% for message in messages %}
-						  <div class="alert alert-danger">
-								{{ message }}
-							</div>
-						{% endfor %}
-
-						{% endif %}
+						{% include 'partials/flash_messages.html' %}
 						
 						<form action="{% url 'register' %}" method="post">
 							{% csrf_token %}

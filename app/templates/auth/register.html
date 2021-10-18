@@ -33,6 +33,8 @@
 							</div>
 						</div>
 
+						{% include 'partials/flash_messages.html' %}
+
 						<form action="{% url 'register' %}" method="post">
 							{% csrf_token %}
 
