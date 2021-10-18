@@ -97,3 +97,5 @@ class ActivateAccountView(View):
 			user.save()
 			messages.add_message(request, messages.INFO, 'Account Activated Successfully!')
 			return redirect('login')
+
+		return render(request, 'auth/activate_fail.html', status = 401)	
