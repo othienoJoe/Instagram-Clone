@@ -58,3 +58,4 @@ class RegistrationView(View):
 class LoginView(View):
 	def get(self, request):
 		return render(request, 'auth/login.html')
+		

@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}
+      |  Register
+{% endblock %}
 
 {% block content %}
 
@@ -29,6 +32,17 @@
 								<hr>
 							</div>
 						</div>
+
+						{% if messages %}
+
+						{% for message in messages %}
+						  <div class="alert alert-danger">
+								{{ message }}
+							</div>
+						{% endfor %}
+
+						{% endif %}
+
 						<form action="{% url 'register' %}" method="post">
 							{% csrf_token %}
 
@@ -58,7 +72,7 @@
 				<div class="card mt-4">
 					<div class="card-body">
 						<p>
-							Already Have An Account ?   <a href="">Login</a>
+							Already Have An Account ?   <a href="login">Login</a>
 						</p>
 					</div>
 				</div>
