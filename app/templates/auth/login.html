@@ -19,7 +19,7 @@
 
 						{% include 'partials/flash_messages.html' %}
 						
-						<form action="{% url 'login' %}" method="POST">
+						<form action="{% url 'login' %}" method="post">
 							{% csrf_token %}
 
 							<div class="form-group">
@@ -29,9 +29,12 @@
 
 								<input type="password" class="form-control form-control-sm mt-2" name="password" value="" placeholder="Password">
 
+								<br>
+
+								<input type="submit" class="btn btn-sm btn-block btn-primary" value="Login">
 							</div>
 
-							<input type="submit" class="btn btn-sm btn-block btn-primary" value="Login">
+							<input type="hidden" name="next" value="{{next}}">
 
 						</form>
 
@@ -49,7 +52,7 @@
 							</div>
 						</div>
 
-						<a href="" class="btn btn-sm btn-block btn-primary"> <i class="fab fa-facebook"></i> Login With Facebook</a>
+						<a href="/" class="btn btn-sm btn-block btn-primary"> <i class="fab fa-facebook"></i> Login With Facebook</a>
 
 				  </div>
         </div>

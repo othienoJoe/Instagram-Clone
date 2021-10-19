@@ -8,13 +8,35 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError
 from .utils import generate_token
+from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 import threading
 
 # Create your views here.
+@login_required(login_url='/accounts/login/')
+def index(request):
+    # get all the images from the database and order them by the date they were created
+    images = Image.objects.all().order_by('-image_date')
+    return render(request, 'index.html', {'images': images})
+
+
+# profile page
+@login_required(login_url='/accounts/login/')
+def profile(request):
+    current_user = request.user
+    # get images for the current logged in user
+    images = Image.objects.filter(user_id=current_user.id)
+    # get the profile of the current logged in user
+    profile = Profile.objects.filter(user_id=current_user.id).first()
+    return render(request, 'profile.html', {"images": images, "profile": profile})
+
 class EmailThread(threading.Thread):
 	def __init__(self, email_message):
 		self.email_message = email_message
@@ -140,6 +162,16 @@ class ActivateAccountView(View):
 class HomeView(View):
 	def get(self, request):
 		return render(request, 'home.html')
+
+@login_required(login_url='/accounts/login/')
+def user_profile(request, id):
+	if User.objects.filter(id=id).exists():
+			user = User.objects.get(id=id)
+			images = Image.objects.filter(user_id=id)
+			profile = Profile.objects.filter(user_id=id).first()
+			return render(request, 'user-profile.html', {'images': images, 'profile': profile, 'user': user})
+	else:
+			return redirect('/')
 
 class LogoutView(View):
 	def post(self, request):
