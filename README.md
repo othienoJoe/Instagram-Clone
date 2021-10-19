@@ -58,12 +58,12 @@ Sign up,upload and enjoy the pictures of your favorite followers.
 
 <ul>
 
-  HTML <br>
-  CSS <br>
-  Bootstrap <br>
-  Python <br>
-  Django <br>
-  PostgreSQL
+*  HTML <br>
+*  CSS <br>
+*  Bootstrap <br>
+*  Python <br>
+*  Django <br>
+*  PostgreSQL
 
 </ul>
 
