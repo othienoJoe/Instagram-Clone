@@ -12,7 +12,17 @@ from django.core.mail import EmailMessage
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 
+import threading
+
 # Create your views here.
+class EmailThread(threading.Thread):
+	def __init__(self, email_message):
+		self.email_message = email_message
+		threading.Thread.__init__(self)
+
+	def run(self):
+		self.email_message.send()
+
 class RegistrationView(View):
 	def get(self, request):
 		return render(request, 'auth/register.html')
@@ -75,7 +85,7 @@ class RegistrationView(View):
 			settings.EMAIL_HOST_USER,
 			[email]
     )
-		email_message.send()
+		EmailThread(email_message).start()
 
 		messages.add_message(request, messages.SUCCESS, 'Account Successfully Created !')
 
