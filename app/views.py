@@ -9,6 +9,8 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError
 from .utils import generate_token
 from django.contrib.auth.decorators import login_required
+from .models import *
+
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
