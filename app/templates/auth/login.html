@@ -19,7 +19,7 @@
 
 						{% include 'partials/flash_messages.html' %}
 						
-						<form action="{% url 'login' %}" method="post">
+						<form action="{% url 'login' %}" method="POST">
 							{% csrf_token %}
 
 							<div class="form-group">
