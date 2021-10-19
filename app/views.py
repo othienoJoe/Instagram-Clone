@@ -10,6 +10,7 @@ from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeEr
 from .utils import generate_token
 from django.core.mail import EmailMessage
 from django.conf import settings
+from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 class RegistrationView(View):
@@ -59,7 +60,7 @@ class RegistrationView(View):
 		user.save()
 
 		current_site = get_current_site(request)
-		email_subject = 'Activate Your Account',
+		email_subject = 'Activate Your Account'
 		message = render_to_string('auth/activate.html',
 		{
 			'user': user,
@@ -83,7 +84,33 @@ class RegistrationView(View):
 class LoginView(View):
 	def get(self, request):
 		return render(request, 'auth/login.html')
-		
+	
+	def get(self, request):
+		context = {
+			'data': request.POST,
+			'has_error': False
+		}
+		username = request.POST.get('username')
+		password = request.POST.get('password')
+		if username == '':
+			messages.add_message(request, messages.ERROR, 'Username is Required!')
+			context['has_error'] = True
+		if password == '':
+			messages.add_message(request, messages.ERROR, 'Password is Required!')
+			context['has_error'] = True
+
+		user = authenticate(request, username = username, password = password)
+
+		if not user and not context['has_error']:
+			messages.add_message(request, messages.ERROR, 'Invalid login!')
+			context['has_error'] = True
+		if context ['has_error']:
+			return render(request, 'auth/login.html', status = 401, context=context)
+		login(request, user)
+		return redirect('home')
+
+		return render(request, 'auth/login.html')
+
 class ActivateAccountView(View):
 	def get(self, request, uidb64, token):
 		try:
@@ -99,3 +126,7 @@ class ActivateAccountView(View):
 			return redirect('login')
 
 		return render(request, 'auth/activate_fail.html', status = 401)	
+
+class HomeView(View):
+	def get(self, request):
+		return render(request, 'home.html')
