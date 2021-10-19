@@ -24,18 +24,14 @@ import threading
 # Create your views here.
 @login_required(login_url='/accounts/login/')
 def index(request):
-    # get all the images from the database and order them by the date they were created
     images = Image.objects.all().order_by('-image_date')
-    return render(request, 'index.html', {'images': images})
-
+    return render(request, 'home.html', {'images': images})
 
 # profile page
 @login_required(login_url='/accounts/login/')
 def profile(request):
     current_user = request.user
-    # get images for the current logged in user
     images = Image.objects.filter(user_id=current_user.id)
-    # get the profile of the current logged in user
     profile = Profile.objects.filter(user_id=current_user.id).first()
     return render(request, 'profile.html', {"images": images, "profile": profile})
 

@@ -13,6 +13,10 @@ import os
 from pathlib import Path
 from django.contrib import messages
 
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -40,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app',
     'bootstrap4',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -78,8 +83,10 @@ WSGI_APPLICATION = 'insta.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'insta',
+        'USER': 'moringa',
+        'PASSWORD': 'Nick94',
     }
 }
 
@@ -122,7 +129,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
+    os.path.join(BASE_DIR, 'staticfiles')
 ]
 
 # Creating an Email validation and sendy
@@ -142,6 +149,13 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_URL = 'logout'
 LOGOUT_REDIRECT_URL = 'login'
+
+# setup cloudinary credentials for django-cloudinary
+cloudinary.config(
+    cloud_name = "nicothieno",
+    api_key = "138935826953116",
+    api_secret = "tWXKi8ktGfsF7bFwyEaPDc0U8Y8",
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
