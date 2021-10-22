@@ -22,13 +22,13 @@ import cloudinary.api
 import threading
 
 # Create your views here.
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='login')
 def index(request):
     images = Image.objects.all().order_by('-image_date')
     return render(request, 'home.html', {'images': images})
 
 # profile page
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='login')
 def profile(request):
     current_user = request.user
     images = Image.objects.filter(user_id=current_user.id)
@@ -139,8 +139,6 @@ class LoginView(View):
 		login(request, user)
 		return redirect('home')
 
-		return render(request, 'auth/')
-
 class ActivateAccountView(View):
 	def get(self, request, uidb64, token):
 		try:
@@ -161,7 +159,7 @@ class HomeView(View):
 	def get(self, request):
 		return render(request, 'home.html')
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='login')
 def user_profile(request, id):
 	if User.objects.filter(id=id).exists():
 			user = User.objects.get(id=id)
@@ -169,7 +167,7 @@ def user_profile(request, id):
 			profile = Profile.objects.filter(user_id=id).first()
 			return render(request, 'user-profile.html', {'images': images, 'profile': profile, 'user': user})
 	else:
-			return redirect('/')
+			return redirect('home')
 
 class LogoutView(View):
 	def post(self, request):
