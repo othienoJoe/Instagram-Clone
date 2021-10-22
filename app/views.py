@@ -139,7 +139,7 @@ class LoginView(View):
 		login(request, user)
 		return redirect('home')
 
-		return render(request, 'auth/login.html')
+		return render(request, 'auth/')
 
 class ActivateAccountView(View):
 	def get(self, request, uidb64, token):
