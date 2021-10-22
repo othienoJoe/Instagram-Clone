@@ -35,6 +35,23 @@ def profile(request):
     profile = Profile.objects.filter(user_id=current_user.id).first()
     return render(request, 'profile.html', {"images": images, "profile": profile})
 
+# save image  with image name,image caption and upload image to cloudinary
+@login_required(login_url='login')
+def save_image(request):
+  if request.method == 'POST':
+			image_name = request.POST['image_name']
+			image_caption = request.POST['image_caption']
+			image_file = request.FILES['image_file']
+			image_file = cloudinary.uploader.upload(image_file)
+			image_url = image_file['url']
+			image_public_id = image_file['public_id']
+			image = Image(image_name=image_name, image_caption=image_caption, image=image_url,
+										profile_id=request.POST['user_id'], user_id=request.POST['user_id'])
+			image.save_image()
+			return redirect('/profile', {'success': 'Image Uploaded Successfully'})
+  else:
+      return render(request, 'profile.html', {'danger': 'Image Upload Failed'})
+
 class EmailThread(threading.Thread):
 	def __init__(self, email_message):
 		self.email_message = email_message
