@@ -85,7 +85,7 @@ class RegistrationView(View):
 		user.set_password(password)
 		user.first_name = full_name
 		user.last_name = full_name
-		user.is_active = False
+		user.is_active = True
 
 		user.save()
 
@@ -167,7 +167,7 @@ def user_profile(request, id):
 			profile = Profile.objects.filter(user_id=id).first()
 			return render(request, 'user-profile.html', {'images': images, 'profile': profile, 'user': user})
 	else:
-			return redirect('home')
+			return redirect('/')
 
 class LogoutView(View):
 	def post(self, request):
